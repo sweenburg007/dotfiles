@@ -1,0 +1,14 @@
+alias mount_sigmaproj="mount_smbfs smb://sigmaproj/sweensw1_home sigmaproj"
+alias mount_udrive="mount_smbfs smb://isilonshares/aplhome$ /Users/sweensw1/udrive"
+alias mount_arcfpga="mount_smbfs smb://arc-fpga-build/sweensw1_share /Users/sweensw1/arc-fpga-build"
+alias mount_sharedrive="mount_smbfs smb://dom1/Core/Dept/AOS/KM/ /Users/sweensw1/share_drive"  
+alias mount_enterprise="mount_smbfs smb://isilonshares/engdesign/APPLICATIONS /Users/sweensw1/engdesign"
+
+export PIP_CERT=/Users/sweensw1/JHUAPL-MS-Root-CA-05-21-2038-B64-text.cer
+export REQUESTS_CA_BUNDLE=/Users/sweensw1/JHUAPL-MS-Root-CA-05-21-2038-B64-text.cer
+export SSL_CERT_FILE=/Users/sweensw1/JHUAPL-MS-Root-CA-05-21-2038-B64-text.cer
+
+alias pip3="pip3 --cert /etc/ssl/certs/ca-certificates.crt --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --default-timeout=1000"
+alias pip="pip --cert /etc/ssl/certs/ca-certificates.crt --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --default-timeout=1000"
+
+
