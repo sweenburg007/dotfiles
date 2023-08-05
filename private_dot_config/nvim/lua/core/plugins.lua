@@ -67,8 +67,12 @@ return packer.startup(function(use)
         after = "nvim-treesitter",
     }
 
+    use {
+        "nvim-treesitter/playground",
+        after = "nvim-treesitter",
+    }
+
     -- Language Server Protocol (LSP) plugins _ Completions (nvim-cmp)
-    
     -- standard configs for popular LSP servers
     use {
         "neovim/nvim-lspconfig",
@@ -97,7 +101,7 @@ return packer.startup(function(use)
     use {
         "hrsh7th/cmp-cmdline",
         after = {"nvim-lspconfig", "nvim-cmp"},
-    }    
+    }
 
     -- snippets for nvim-cmp
     use {
@@ -109,22 +113,42 @@ return packer.startup(function(use)
     }
     use { "saadparwaiz1/cmp_luasnip" }
     use { "rafamadriz/friendly-snippets" }
-    
-   
-    --  configs for UI and other backend
+
     use { "tanvirtin/monokai.nvim" }
+    use { use "cpea2506/one_monokai.nvim" }
+    -- require("one_monokai").setup({
+    --     transparent = false,  -- enable transparent window
+    --     themes = function(colors)
+    --         -- change highlight of some groups,
+    --         -- the key and value will be passed respectively to "nvim_set_hl"
+    --         return {
+    --             Normal = { bg = colors.lmao },
+    --             ErrorMsg = { fg = colors.pink, bg = "#ec6075", standout = true },
+    --             ["@lsp.type.keyword"] = { link = "@keyword" }
+    --         }
+    --     end,
+    -- })
+
+
     use { "tpope/vim-repeat"}
     use { "frazrepo/vim-rainbow" }
     use { "tpope/vim-fugitive" }
 
     use { 'ryanoasis/vim-devicons' }
 
-    use { 
+    use {
         'folke/noice.nvim',
         requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify"},
         config = function()
             require("noice").setup()
         end
+    }
+
+    use {
+        "dnlhc/glance.nvim",
+        config = function()
+            require('glance').setup()
+        end,
     }
 
     use {
@@ -145,6 +169,7 @@ return packer.startup(function(use)
         after = { "telescope-fzf-native.nvim", "telescope-luasnip.nvim" },
     }
 
+
     use {
         "nvim-telescope/telescope-fzf-native.nvim",
         run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
@@ -153,11 +178,11 @@ return packer.startup(function(use)
     -- search luasnip snippets from inside telescope
     use {
         "benfowler/telescope-luasnip.nvim",
-    }    
+    }
 
     -- -------
     -- Movement plugins
-    use { 
+    use {
         "ggandor/leap.nvim",
         config = function()
             require("leap").add_default_mappings()
@@ -190,6 +215,18 @@ return packer.startup(function(use)
         end,
     }
 
+    -- trying out portal to see if it works well with the vscode stuff
+    use {
+        "cbochs/portal.nvim",
+        -- Optional dependencies
+        requires = {
+            "cbochs/grapple.nvim",
+            "ThePrimeagen/harpoon"
+        },
+    }
+
+    use { "bkad/CamelCaseMotion" }
+
     -- TS aware comments
     use {
         'numToStr/Comment.nvim',
@@ -198,30 +235,27 @@ return packer.startup(function(use)
         end
     }
 
-    -- trying out something to work with vscode
-    use {
-        "icedman/nvim-textmate",
-        config = function ()
-            require("nvim-textmate").setup(
-                {
-                    quick_load = true,
-                    theme_name = "Monokai",
-                    override_colorscheme = false
-                }
-            )
-        end
-    }
-
     -- -------
     -- Text Manipulation
-    use { "tpope/vim-surround"}
-    -- use { "tpope/vim-commentary" }
+    --
+    use({
+        "kylechui/nvim-surround",
+        tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+        config = function()
+            require("nvim-surround").setup({
+                -- Configuration here, or leave empty to use defaults
+            })
+        end
+    })
     use { "alker0/chezmoi.vim" }
     use { "kovetskiy/sxhkd-vim" }
+
+    -- undotree visualization/movements
+    use {"mbbill/undotree"}
 
     -- if bootstrapping, run sync
     if PACKER_BOOTSTRAP then
         require("packer").sync()
     end
- 
+
 end)

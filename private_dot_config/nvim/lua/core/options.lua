@@ -1,5 +1,5 @@
 -- set the main colorscheme
-vim.cmd.colorscheme("monokai")
+vim.cmd.colorscheme("one_monokai")
 
 -- set main options
 local options = {
@@ -12,7 +12,7 @@ local options = {
         number = true,
         -- nowrap = true,
         wrap = false,
-	
+
         expandtab = true,
         tabstop = 4,
         softtabstop = 4,

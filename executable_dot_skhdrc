@@ -8,9 +8,10 @@ tree < 0x35 ; default
 cmd - 0 : skhd --text "stephen.sweeney@jhuapl.edu"
 cmd - 9 : skhd --text "V6RXXM7NKG-ML"
 
+default, tree < cmd + shift - 0x35: yabai --restart-service
+
 default, tree < cmd - 0x35 : skhd --reload; pkill limelight; limelight -c ~/.limelightrc >/dev/null &
 tree < cmd - 0x35 ; default
-
 
 # Application focus
 lcmd - h : yabai -m window --focus west

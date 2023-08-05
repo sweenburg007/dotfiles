@@ -124,11 +124,18 @@ eval "$(direnv hook zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# pyenv setup
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+# add poetry to path
+export PATH="/Users/sweensw1/.local/bin:$PATH"
+
 # bindkeys for autosuggestions
 bindkey '^[[Z' forward-word
 export LC_ALL=en_US.UTF-8
 
 # if work script exists, source it
-if [ ! -f ~/.work_configs ]; then
+if [  -f ~/.work_configs ]; then
   source ~/.work_configs
 fi

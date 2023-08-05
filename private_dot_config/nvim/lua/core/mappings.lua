@@ -29,12 +29,18 @@ keymap("v", "<leader>P", '"+P')
 -- clear higlight matches from find
 keymap("n", "<leader><space>", "<cmd>noh<cr>")
 
--- LSP 
+-- LSP
 if vim.fn.exists("g:vscode") == 0 then
     vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
     vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
     vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
     vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
+end
+
+-- Portal key mappings
+if vim.fn.exists("g:vscode") == 0 then
+    vim.keymap.set("n", "<leader>o", "<cmd>Portal jumplist backward<cr>")
+    vim.keymap.set("n", "<leader>i", "<cmd>Portal jumplist forward<cr>")
 end
 
 -- Telescope
@@ -46,10 +52,12 @@ local project_files = function()
     if not ok then require("telescope.builtin").find_files(opts) end
 end
 
-vim.keymap.set("n", "<c-p>", project_files)
-keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>")
-keymap("n", "<c-f>", "<cmd>Telescope live_grep<CR>")
-keymap("n", "<Tab>", "<cmd>Telescope buffers<CR>")
+if vim.fn.exists("g:vscode") ~= 1 then
+    vim.keymap.set("n", "<c-p>", project_files)
+    keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>")
+    keymap("n", "<c-f>", "<cmd>Telescope live_grep<CR>")
+    keymap("n", "<Tab>", "<cmd>Telescope buffers<CR>")
+end
 
 local function notify(cmd)
     return string.format("<cmd>call VSCodeNotify('%s')<CR>", cmd)
@@ -77,8 +85,6 @@ if vim.fn.exists("g:vscode") == 1 then
     keymap('n', '<Leader>ff', notify 'workbench.action.quickOpen', { silent = true }) -- find files
     keymap('n', '<Leader>tw', notify 'workbench.action.terminal.toggleTerminal', { silent = true }) -- terminal window
 
-    keymap('v', '<Leader>fm', v_notify 'editor.action.formatSelection', { silent = true })
-    keymap('v', '<Leader>ca', v_notify 'editor.action.refactor', { silent = true })
     keymap('v', '<Leader>fc', v_notify 'workbench.action.showCommands', { silent = true })
 
 end

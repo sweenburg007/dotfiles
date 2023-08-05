@@ -56,13 +56,14 @@ yabai -m signal --add event=space_changed \
 
 
 # float system apps
-yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add app="^Calculator$" manage=off
 yabai -m rule --add app="^Disk Utility$" manage=off
 yabai -m rule --add app="^Activity Monitor$" manage=off
 yabai -m rule --add app="^Installer$" manage=off
 yabai -m rule --add app="^System Information$" manage=off
+yabai -m rule --add app="^DisplayLink Manager$" manage=off
 # yabai -m rule --add app="^MATLAB_2021b$" manage=off
 
 # Work app management exceptions

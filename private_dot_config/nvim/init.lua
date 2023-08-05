@@ -6,4 +6,4 @@ require "core.plugins"
 -- settings / bindings
 require "core.options"
 require "core.mappings"
-
+require "core.autocmds"
