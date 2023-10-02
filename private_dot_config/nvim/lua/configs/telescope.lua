@@ -5,6 +5,9 @@ if vim.fn.exists("g:vscode") ~= 1 then
 
     telescope.setup {
         defaults = {
+            -- ignore patters for certain folders
+            file_ignore_pattersn = {".venv"},
+
             -- trim leading space from matches
             vimgrep_arguments = {
                 "rg",

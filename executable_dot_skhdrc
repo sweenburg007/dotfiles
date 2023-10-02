@@ -1,5 +1,5 @@
-:: default : limelight -m config active_color 0xffebdbb2
-:: tree : limelight -m config active_color 0xcc458588
+:: default
+:: tree
 
 ctrl - f ; tree
 tree < ctrl - f -> ; default
@@ -10,7 +10,7 @@ cmd - 9 : skhd --text "V6RXXM7NKG-ML"
 
 default, tree < cmd + shift - 0x35: yabai --restart-service
 
-default, tree < cmd - 0x35 : skhd --reload; pkill limelight; limelight -c ~/.limelightrc >/dev/null &
+default, tree < cmd - 0x35 : skhd --reload
 tree < cmd - 0x35 ; default
 
 # Application focus

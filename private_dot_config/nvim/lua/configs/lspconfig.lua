@@ -59,25 +59,10 @@ if vim.fn.exists("g:vscode") == 0 then
     local servers = {
         -- bash
         "bashls",
-        -- python
-            -- needs custom flags
-        -- "pylsp",
-        -- "pyright",
-        -- ruby
         "solargraph",
-        -- lua
         "lua_ls",
-        -- java
-            -- needs custom flags
-            -- "java_language_server",
-        -- c/c++
-            -- ccls/clangd both rely on JSON compilation databases
-            -- requires running `bear -- <build cmd>` first
-        -- "ccls",
         "clangd",
-        -- rust
         "rust_analyzer",
-        -- go
         "gopls",
     }
     for _, lsp in pairs(servers) do
@@ -105,6 +90,7 @@ if vim.fn.exists("g:vscode") == 0 then
             pylsp = {
                 configurationSources = { "ruff", "mypy" },
                 plugins = {
+                    pyls_black = { enabled = true },
                     ruff = { enabled = true },
                     mypy = { enabled = true },
                 },
@@ -112,30 +98,31 @@ if vim.fn.exists("g:vscode") == 0 then
         },
     })
 
-    -- Only define once
-    if not require'lspconfig.configs'.hdl_checker then
-        require'lspconfig.configs'.hdl_checker = {
-            default_config = {
-            cmd = {"hdl_checker", "--lsp", };
-            filetypes = {"vhdl", "verilog", "systemverilog"};
-                root_dir = function(fname)
-                    -- will look for the .hdl_checker.config file in parent directory, a
-                    -- .git directory, or else use the current directory, in that order.
-                    local util = require'lspconfig'.util
-                    return util.root_pattern('.hdl_checker.config')(fname) or util.find_git_ancestor(fname) or util.path.dirname(fname)
-                end;
-                settings = {};
-            };
-        }
-    end
+    lspconfig.svlangserver.setup {
+        on_init = function(client)
+            local path = client.workspace_folders[1].name
 
-    require'lspconfig'.hdl_checker.setup{}
+            if path == '/path/to/project1' then
+                client.config.settings.systemverilog = {
+                    includeIndexing     = {"**/*.{sv,svh}"},
+                    excludeIndexing     = {"test/**/*.sv*"},
+                    defines             = {},
+                    launchConfiguration = "/tools/verilator -sv -Wall --lint-only",
+                    formatCommand       = "/tools/verible-verilog-format"
+                }
+            elseif path == '/path/to/project2' then
+                client.config.settings.systemverilog = {
+                    includeIndexing     = {"**/*.{sv,svh}"},
+                    excludeIndexing     = {"sim/**/*.sv*"},
+                    defines             = {},
+                    launchConfiguration = "/tools/verilator -sv -Wall --lint-only",
+                    formatCommand       = "/tools/verible-verilog-format"
+                }
+            end
 
-    -- java
-    lspconfig.java_language_server.setup {
-        on_attach = on_attach,
-        -- TODO - should this line be templated/checked for which OS?
-        cmd = { os.getenv("HOME") .. "/.cache/java-language-server/dist/lang_server_mac.sh" },
+            client.notify("workspace/didChangeConfiguration")
+            return true
+        end
     }
 
 else

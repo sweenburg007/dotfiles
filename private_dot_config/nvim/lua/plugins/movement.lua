@@ -33,11 +33,21 @@ if vim.fn.exists("g:vscode") ~= 1 then
         },
 
         -- actions at a distance
+        -- {
+        --     "ggandor/leap-spooky.nvim",
+        -- opts = {
+        --     paste_on_remote_yank = true,
+        --     },
+        -- },
         {
-            "ggandor/leap-spooky.nvim",
-        opts = {
-            paste_on_remote_yank = true,
-            },
+            'rasulomaroff/telepath.nvim',
+            dependencies = 'ggandor/leap.nvim',
+            -- there's no sence in using lazy loading since telepath won't load the main module
+            -- until you actually use mappings
+            lazy = false,
+            config = function()
+                require('telepath').use_default_mappings()
+            end
         },
 
         -- cool searching
@@ -96,12 +106,22 @@ else
         },
 
         -- actions at a distance
+        -- {
+        --     "ggandor/leap-spooky.nvim",
+        -- opts = {
+        --     paste_on_remote_yank = true,
+        --     },
+        -- },
         {
-            "ggandor/leap-spooky.nvim",
-        opts = {
-            paste_on_remote_yank = true,
-            },
-        },
+            'rasulomaroff/telepath.nvim',
+            dependencies = 'ggandor/leap.nvim',
+            -- there's no sence in using lazy loading since telepath won't load the main module
+            -- until you actually use mappings
+            lazy = false,
+            config = function()
+                require('telepath').use_default_mappings()
+            end
+        }
     }
 end
 

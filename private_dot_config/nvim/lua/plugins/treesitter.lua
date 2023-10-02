@@ -25,11 +25,13 @@ return {
 
     -- TODO: this should be updated, as this version is archived
     -- pair highlighting
-    {
-        "https://git.sr.ht/~p00f/nvim-ts-rainbow",
-        name = "nvim-ts-rainbow",
-        url = "https://git.sr.ht/~p00f/nvim-ts-rainbow/",
-    },
+    -- {
+    --     "https://git.sr.ht/~p00f/nvim-ts-rainbow",
+    --     name = "nvim-ts-rainbow",
+    --     url = "https://git.sr.ht/~p00f/nvim-ts-rainbow/",
+    -- },
+
+    {"https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git"},
 
     -- display AST, write TS queries for buffer
     {
