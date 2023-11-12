@@ -112,7 +112,7 @@ alt - c         : ~/.bin/yabai-center
 alt - e         : yabai -m window --toggle split
 
 # toggle window fullscreen
-lcmd - g        : yabai -m window --toggle zoom-fullscreen
+cmd - g        : yabai -m window --toggle zoom-fullscreen
 
 # toggle window parent zoom
 tree < p        : yabai -m window --toggle zoom-parent

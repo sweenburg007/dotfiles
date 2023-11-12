@@ -119,6 +119,11 @@ if vim.fn.exists("g:vscode") ~= 1 then
         },
     }
 
+    require("various-textobjs").setup{
+        useDefaultKeymaps = false,
+        disabledKeymaps = {"yR", "yr"},
+    }
+
 else
     require("nvim-treesitter.configs").setup {
         ensure_installed = {"rust", "python", "c", "verilog", "matlab"},
@@ -200,4 +205,10 @@ else
             use_virtual_text = false,
         },
     }
+
+    require("various-textobjs").setup{
+        useDefaultKeymaps = false,
+        disabledKeymaps = {"yR", "yr"},
+    }
+
 end

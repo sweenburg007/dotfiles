@@ -23,13 +23,12 @@ return {
         config = true,
     },
 
-    -- TODO: this should be updated, as this version is archived
-    -- pair highlighting
-    -- {
-    --     "https://git.sr.ht/~p00f/nvim-ts-rainbow",
-    --     name = "nvim-ts-rainbow",
-    --     url = "https://git.sr.ht/~p00f/nvim-ts-rainbow/",
-    -- },
+    {
+        "chrisgrieser/nvim-various-textobjs",
+        lazy = true,
+        -- opts = { useDefaultKeymaps = true },
+    },
+
 
     {"https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git"},
 

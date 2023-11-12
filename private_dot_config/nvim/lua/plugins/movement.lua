@@ -32,13 +32,6 @@ if vim.fn.exists("g:vscode") ~= 1 then
             },
         },
 
-        -- actions at a distance
-        -- {
-        --     "ggandor/leap-spooky.nvim",
-        -- opts = {
-        --     paste_on_remote_yank = true,
-        --     },
-        -- },
         {
             'rasulomaroff/telepath.nvim',
             dependencies = 'ggandor/leap.nvim',
@@ -105,13 +98,6 @@ else
             },
         },
 
-        -- actions at a distance
-        -- {
-        --     "ggandor/leap-spooky.nvim",
-        -- opts = {
-        --     paste_on_remote_yank = true,
-        --     },
-        -- },
         {
             'rasulomaroff/telepath.nvim',
             dependencies = 'ggandor/leap.nvim',
