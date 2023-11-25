@@ -33,6 +33,11 @@ if vim.fn.exists("g:vscode") ~= 1 then
             config = function() require "configs.telescope" end,
         },
 
+        {
+            "folke/trouble.nvim",
+            dependencies = { "nvim-tree/nvim-web-devicons" },
+        },
+
         -- git signs in gutter, management of hunks ;) and simple diff views
         {
             "lewis6991/gitsigns.nvim",

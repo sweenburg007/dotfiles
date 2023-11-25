@@ -10,6 +10,10 @@ else
         },
 
         {
+            "rebelot/kanagawa.nvim"
+        },
+
+        {
             'cesaralvarod/tokyogogh.nvim',
             lazy=false,
             priority=1000,
@@ -27,24 +31,10 @@ else
             "nvim-lualine/lualine.nvim",
             config = function() require("configs.lualine") end,
         },
+
         {
             "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {}
         },
-        -- {
-        --     "lukas-reineke/indent-blankline.nvim",
-        --     config = function()
-        --         vim.opt.list = true
-        --         vim.opt.listchars:append "space:⋅"
-        --         vim.opt.listchars:append "eol:↴"
-        --
-        --         require("indent_blankline").setup {
-        --             main = "ibl",
-        --             space_char_blankline = " ",
-        --             show_current_context = true,
-        --             show_current_context_start = true,
-        --         }
-        --     end,
-        -- },
 
         -- re-color window split borders
         {

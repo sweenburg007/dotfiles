@@ -70,6 +70,14 @@ if vim.fn.exists("g:vscode") ~= 1 then
     vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
     vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
 
+    -- mappings for trouble
+    vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
+    vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end)
+    vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end)
+    vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end)
+    vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end)
+    -- vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)
+
     -- maybe this should be defined as on_attach?
     local diagnostics_shown = 1
     local toggle_vim_diagnostic = function()
@@ -103,6 +111,7 @@ if vim.fn.exists("g:vscode") ~= 1 then
     keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>")
     keymap("n", "<leader>rg", "<cmd>Telescope live_grep<CR>")
     keymap("n", "<Tab>", "<cmd>Telescope buffers<CR>")
+    keymap("n", "<leader>fg", "<cmd>Telescope git_status<CR>")
 
     -- ssr
     vim.keymap.set(
