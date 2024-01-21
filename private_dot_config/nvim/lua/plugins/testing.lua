@@ -1,18 +1,13 @@
-if vim.fn.exists("g:vscode") ~= 1 then
-    return {
-        'ThePrimeagen/vim-be-good',
-
-        'MortenStabenau/matlab-vim',
-        "yinflying/matlab.vim",
-    },
+return {
     {
-        "danymat/neogen",
-        dependencies = "nvim-treesitter/nvim-treesitter",
-        config = true,
-        -- Uncomment next line if you want to follow only stable versions
-        -- version = "*"
+        'kkoomen/vim-doge',
+    },
+    -- { "williamboman/mason-lspconfig.nvim" },
+    {
+        "williamboman/mason.nvim",
+        config = function()
+            require("mason").setup()
+            -- require("mason-lspconfig").setup()
+        end,
     }
-
-else
-    return {}
-end
+}

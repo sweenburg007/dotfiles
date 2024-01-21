@@ -1,9 +1,5 @@
 -- set color scheme
-if vim.fn.exists("g:vscode") ~= 1 then
-    vim.cmd.colorscheme("tokyonight-storm")
-else
-    vim.cmd.colorscheme("monokai")
-end
+vim.cmd.colorscheme("catppuccin-mocha")
 
 local options = {
     opt = {
