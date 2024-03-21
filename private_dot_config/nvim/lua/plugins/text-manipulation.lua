@@ -45,9 +45,6 @@ return {
     -- visualization for undo tree
     "mbbill/undotree",
 
-    -- TS structural search and replace
-    "cshuaimin/ssr.nvim",
-
     -- handy docstring generator
     {
         "danymat/neogen",

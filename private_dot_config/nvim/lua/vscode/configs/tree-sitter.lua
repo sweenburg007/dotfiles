@@ -98,8 +98,3 @@ require("nvim-treesitter.configs").setup {
         use_virtual_text = false,
     },
 }
-
-require("various-textobjs").setup {
-    useDefaultKeymaps = false,
-    disabledKeymaps = { "yR", "yr" },
-}

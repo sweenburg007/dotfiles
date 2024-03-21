@@ -1,29 +1,10 @@
 -- Themeing and UI changes
 return {
-    { "folke/tokyonight.nvim", },
-    { "catppuccin/nvim",       name = "catppuccin", priority = 1000 },
     {
-        "ray-x/starry.nvim",
-        config = function()
-            require("starry").setup()
-        end
+        "catppuccin/nvim",
+        name = "catppuccin",
+        priority = 1000
     },
-
-    { "rebelot/kanagawa.nvim" },
-
-    {
-        'cesaralvarod/tokyogogh.nvim',
-        lazy = false,
-        priority = 1000,
-        config = function()
-            require('tokyogogh').setup {
-                style = 'storm' -- storm | night
-            }
-            vim.cmd([[colorscheme tokyogogh]])
-        end
-    },
-
-    { 'tanvirtin/monokai.nvim' },
 
     {
         "nvim-lualine/lualine.nvim",
@@ -31,7 +12,9 @@ return {
     },
 
     {
-        "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {}
+        "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
+        opts = {}
     },
 
     -- re-color window split borders
@@ -66,4 +49,11 @@ return {
             },
         },
     },
+    {
+        'folke/todo-comments.nvim',
+        event = 'VimEnter',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+        opts = { signs = false }
+    },
+
 }

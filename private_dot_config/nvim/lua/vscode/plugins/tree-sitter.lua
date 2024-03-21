@@ -22,10 +22,4 @@ return {
         main = "mini.ai",
         config = true,
     },
-
-    {
-        "chrisgrieser/nvim-various-textobjs",
-        lazy = true,
-        -- opts = { useDefaultKeymaps = true },
-    },
 }

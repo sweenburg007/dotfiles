@@ -23,13 +23,6 @@ return {
         config = true,
     },
 
-    {
-        "chrisgrieser/nvim-various-textobjs",
-        lazy = true,
-        -- opts = { useDefaultKeymaps = true },
-    },
-
-
     {"https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git"},
 
     -- display AST, write TS queries for buffer

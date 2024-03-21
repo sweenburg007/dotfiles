@@ -2,6 +2,9 @@
 vim.cmd.colorscheme("catppuccin-mocha")
 
 local options = {
+    g = {
+        have_nerd_font = true
+    },
     opt = {
         number = true,
         relativenumber = true,
@@ -29,12 +32,16 @@ local options = {
         splitright = true,
 
         cursorline = true,
-        cursorlineopt = "number,line"
+        cursorlineopt = "number,line",
+
+        inccommand = "split",
+        scrolloff = 10,
+        hlsearch = true
     },
 }
 
 for scope, table in pairs(options) do
     for setting, value in pairs(table) do
-    vim[scope][setting] = value
+        vim[scope][setting] = value
     end
 end

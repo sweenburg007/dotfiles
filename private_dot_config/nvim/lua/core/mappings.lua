@@ -21,7 +21,7 @@ keymap("v", "<leader>p", '"+p')
 keymap("v", "<leader>P", '"+P')
 
 -- clear search highlighting
-keymap("n", "<leader><space>", "<cmd>noh<cr>")
+keymap("n", "<leader>\\", "<cmd>noh<cr>")
 
 -- center search results
 -- */# searches are centered below, in hlslens keybinds
@@ -30,18 +30,15 @@ keymap("n", "N", "Nzz")
 keymap("n", "<C-d>", "<C-d>zz")
 keymap("n", "<C-u>", "<C-u>zz")
 
--- chmod current file to executable
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
-
 -- camelcasemotion
-keymap("", "<leader>w", "<Plug>CamelCaseMotion_w")
-keymap("", "<leader>b", "<Plug>CamelCaseMotion_b")
-keymap("", "<leader>e", "<Plug>CamelCaseMotion_e")
-keymap("", "<leader>ge", "<Plug>CamelCaseMotion_ge")
+keymap("", "\\w", "<Plug>CamelCaseMotion_w")
+keymap("", "\\b", "<Plug>CamelCaseMotion_b")
+keymap("", "\\e", "<Plug>CamelCaseMotion_e")
+keymap("", "\\ge", "<Plug>CamelCaseMotion_ge")
 
-vim.keymap.set({ "o", "x" }, "<leader>iw", "<Plug>CamelCaseMotion_iw")
-vim.keymap.set({ "o", "x" }, "<leader>ib", "<Plug>CamelCaseMotion_ib")
-vim.keymap.set({ "o", "x" }, "<leader>ie", "<Plug>CamelCaseMotion_ie")
+vim.keymap.set({ "o", "x" }, "\\iw", "<Plug>CamelCaseMotion_iw")
+vim.keymap.set({ "o", "x" }, "\\ib", "<Plug>CamelCaseMotion_ib")
+vim.keymap.set({ "o", "x" }, "\\ie", "<Plug>CamelCaseMotion_ie")
 
 -- Gate mappings that are useless in vscode
 -- portal keymaps
@@ -62,20 +59,11 @@ vim.keymap.set(
     end
 )
 -- LSP (note lsp is built-in functionality)
-vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
--- mappings for trouble
-vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
-vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end)
-vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end)
-vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end)
-vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end)
--- vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)
-
--- maybe this should be defined as on_attach?
 local diagnostics_shown = 1
 local toggle_vim_diagnostic = function()
     if diagnostics_shown == 1 then
@@ -97,27 +85,54 @@ vim.keymap.set("n", "]oe", vim.diagnostic.hide)
 vim.keymap.set("n", "<Esc>", function()
     -- clear notifications
     require("notify").dismiss()
-    -- clear highlights
     vim.cmd.nohlsearch()
 end)
 
 -- undotree
-keymap("n", "<leader>u", "<cmd>UndotreeToggle<CR>", { desc = "UndotreeToggle" })
+vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "[U]ndotreeToggle" })
+
+-- neogen
+vim.api.nvim_set_keymap(
+    "n", "<Leader>ng", ":lua require('neogen').generate()<CR>",
+    { noremap = true, silent = true, desc = "[N]eogen [G]enerate" }
+)
 
 -- Telescope
-keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>")
-keymap("n", "<leader>rg", "<cmd>Telescope live_grep<CR>")
-keymap("n", "<leader>tt", "<cmd>Telescope buffers<CR>")
-keymap("n", "<leader>fg", "<cmd>Telescope git_status<CR>")
-keymap("n", "<leader>fs", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>")
+local builtin = require 'telescope.builtin'
+vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
+vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
+vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
+vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
--- ssr
-vim.keymap.set(
-    { "n", "x" },
-    "<leader>sr",
-    function() require("ssr").open() end,
-    { desc = "Structural Replace" }
-)
+-- Slightly advanced example of overriding default behavior and theme
+vim.keymap.set('n', '<leader>/', function()
+    -- You can pass additional configuration to telescope to change theme, layout, etc.
+    builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+        winblend = 10,
+        previewer = false,
+    })
+end, { desc = '[/] Fuzzily search in current buffer' })
+
+-- Also possible to pass additional configuration options.
+--  See `:help telescope.builtin.live_grep()` for information about particular keys
+vim.keymap.set('n', '<leader>s/', function()
+    builtin.live_grep {
+        grep_open_files = true,
+        prompt_title = 'Live Grep in Open Files',
+    }
+end, { desc = '[S]earch [/] in Open Files' })
+
+-- Shortcut for searching your neovim configuration files
+vim.keymap.set('n', '<leader>sn', function()
+    builtin.find_files { cwd = vim.fn.stdpath 'config' }
+end, { desc = '[S]earch [N]eovim files' })
+
 
 -- hlslens
 keymap("n", "*", "", {
@@ -126,4 +141,3 @@ keymap("n", "*", "", {
         require 'hlslens'.start()
     end,
 })
-

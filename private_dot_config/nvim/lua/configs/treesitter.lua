@@ -117,8 +117,3 @@ require("nvim-treesitter.configs").setup {
         lint_events = { "InsertLeave" },
     },
 }
-
-require("various-textobjs").setup {
-    useDefaultKeymaps = false,
-    disabledKeymaps = { "yR", "yr" },
-}

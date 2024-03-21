@@ -4,34 +4,34 @@ return {
         "neovim/nvim-lspconfig",
         dependencies = {
             {
-                -- development settings for lua files under nvim root
-                -- load neodev only if editing lua/lua.tmpl files under nvim/chezmoi/packer root
-                "folke/neodev.nvim",
-                opts = {
-                    override = function(root_dir, library)
-                        local util = require("neodev.util")
-                        if (
-                                util.has_file(root_dir, ".local/share/chezmoi/")
-                                or
-                                util.has_file(root_dir, "pack/packer")
-                            -- neodev will implicitly set up for nvim config dir:
-                            -- or
-                            -- util.is_nvim_config()
-                            ) then
-                            library.enabled = true
-                            library.plugins = true
-                        end
-                    end,
+                -- Automatically install LSPs and related tools to stdpath for neovim
+                'williamboman/mason.nvim',
+                'williamboman/mason-lspconfig.nvim',
+                'WhoIsSethDaniel/mason-tool-installer.nvim',
+                {
+                    "folke/neodev.nvim",
+                    opts = {
+                        override = function(root_dir, library)
+                            local util = require("neodev.util")
+                            if (
+                                    util.has_file(root_dir, ".local/share/chezmoi/")
+                                    or
+                                    util.has_file(root_dir, "pack/packer")
+                                ) then
+                                library.enabled = true
+                                library.plugins = true
+                            end
+                        end,
+                    }
                 },
             },
             {
                 -- completion candidates for nvim-cmp
                 "hrsh7th/cmp-nvim-lsp",
             },
-            -- provide virtual text inline type hints
             {
+                -- provide virtual text inline type hints
                 "lvimuser/lsp-inlayhints.nvim",
-                -- config = true,
                 opts = {
                     inlay_hints = {
                         type_hints = {
@@ -40,6 +40,11 @@ return {
                         highlight = "Comment",
                     },
                 },
+            },
+            {
+                "pmizio/typescript-tools.nvim",
+                dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+                opts = {},
             },
         },
         config = function()
@@ -77,16 +82,18 @@ return {
         "ray-x/lsp_signature.nvim",
         opts = { bind = true },
     },
-
     {
-        "DNLHC/glance.nvim",
-        opts = {
-            preview_win_opts = {
-                relativenumber = false,
-            },
-            border = {
-                enable = true,
-            }
-        },
+        "danymat/neogen",
+        config = function()
+            require("neogen").setup({
+                enabled = true,
+                snippet_engine = "luasnip",
+                languages = {
+                    python = {
+                        annotation_convention = "numpydoc"
+                    }
+                }
+            })
+        end,
     }
 }

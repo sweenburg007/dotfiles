@@ -7,17 +7,6 @@ local map = cmp.mapping
 local luasnip = require("luasnip")
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
-local t = function(str)
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-
--- defined by nvim-cmp's example mappings for luasnip
--- i don't really understand the point of this function
-local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
 -- annotate completion candidates in Pmenu (vscode-like)
 -- https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#how-to-add-visual-studio-code-codicons-to-the-menu
 -- had to install nerd-fonts-patched FantasqueSansMono to get this to work:
@@ -63,34 +52,20 @@ cmp.setup({
     -- and: https://github.com/hrsh7th/nvim-cmp/commit/93cf84f7deb2bdb640ffbb1d2f8d6d412a7aa558
     -- TODO - in light of this removal, this bindings could probably be cleaned up in the future.
     mapping = map.preset.insert({
-        ["<C-u>"] = map(map.scroll_docs(-4), { "i", "c" }),
-        ["<C-d>"] = map(map.scroll_docs(4), { "i", "c" }),
-        ["<C-Space>"] = map(map.complete(), { "i", "c" }),
-        ["<C-y>"] = cmp.config.disable,     -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-        ["<C-e>"] = map({
-            i = map.abort(),
-            c = map.close(),
-        }),
-        ["<Tab>"] = map.confirm({ select = true }),     -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-
-        ["<C-j>"] = map(function(fallback)
-            if luasnip.expand_or_jumpable() then
+        ['<C-n>'] = cmp.mapping.select_next_item(),
+        ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<C-y>'] = cmp.mapping.confirm { select = true },
+        ['<C-Space>'] = cmp.mapping.complete {},
+        ['<C-l>'] = cmp.mapping(function()
+            if luasnip.expand_or_locally_jumpable() then
                 luasnip.expand_or_jump()
-            elseif has_words_before() then
-                cmp.complete()
-            else
-                fallback()
             end
-        end, { "i", "s", "c" }),
-
-        ["<C-h>"] = map(function(fallback)
-            if luasnip.jumpable(-1) then
+        end, { 'i', 's' }),
+        ['<C-h>'] = cmp.mapping(function()
+            if luasnip.locally_jumpable(-1) then
                 luasnip.jump(-1)
-            else
-                fallback()
             end
-        end, { "i", "s", "c" }),
-
+        end, { 'i', 's' }),
     }),
 
     sources = cmp.config.sources({
