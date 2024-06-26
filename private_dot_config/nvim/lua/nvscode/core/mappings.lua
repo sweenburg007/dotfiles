@@ -21,17 +21,8 @@ keymap("v", "<leader>P", '"+P')
 
 
 -- clear search highlighting
-keymap("n", "<leader>\\", "<cmd>noh<cr>")
-
--- camelcasemotion
-keymap("", "<leader>w", "<Plug>CamelCaseMotion_w")
-keymap("", "<leader>b", "<Plug>CamelCaseMotion_b")
-keymap("", "<leader>e", "<Plug>CamelCaseMotion_e")
-keymap("", "<leader>ge", "<Plug>CamelCaseMotion_ge")
-
-vim.keymap.set({ "o", "x" }, "<leader>iw", "<Plug>CamelCaseMotion_iw")
-vim.keymap.set({ "o", "x" }, "<leader>ib", "<Plug>CamelCaseMotion_ib")
-vim.keymap.set({ "o", "x" }, "<leader>ie", "<Plug>CamelCaseMotion_ie")
+keymap("n", "<ESC>", "<cmd>noh<cr>")
+keymap("n", "<leader><ESC>", "<cmd>noh<cr>")
 
 local function notify(cmd)
     return string.format("<cmd>call VSCodeNotify('%s')<CR>", cmd)
@@ -41,6 +32,7 @@ keymap('n', '<Leader>sg', notify 'workbench.action.findInFiles', { silent = true
 keymap('n', '<Leader>ts', notify 'workbench.action.toggleSidebarVisibility', { silent = true })
 keymap('n', '<Leader>tp', notify 'workbench.action.togglePanel', { silent = true })
 keymap('n', '<Leader>sf', notify 'workbench.action.quickOpen', { silent = true })               -- find files
+keymap('n', '<Leader>sg', notify 'workbench.action.quickTextSearch', { silent = true })               -- find files
 keymap('n', '<Leader>fs', notify 'workbench.action.showAllSymbols', {silent = true})
 keymap('n', '<Leader>tw', notify 'workbench.action.terminal.toggleTerminal', { silent = true }) -- terminal window
 keymap('n', 'gr', notify 'editor.action.goToReferences', { silent = true })

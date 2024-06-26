@@ -4,7 +4,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
-        config = function() require "vscode.configs.tree-sitter" end,
+        config = function() require "nvscode.configs.tree-sitter" end,
         dependencies = {
             {
                 "IndianBoy42/tree-sitter-just",

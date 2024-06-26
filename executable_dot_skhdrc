@@ -1,17 +1,13 @@
 :: default
-:: tree
 
-ctrl - f ; tree
-tree < ctrl - f -> ; default
-tree < 0x35 ; default
 
 cmd - 0 : skhd --text "stephen.sweeney@jhuapl.edu"
 cmd - 9 : skhd --text "V6RXXM7NKG-ML"
 
-default, tree < cmd + shift - 0x35: yabai --restart-service
+default < cmd + shift - 0x35: yabai --restart-service
+default < cmd + ctrl - 0x35: pkill borders && borders active_color=0xFFFF00FF inactive_color=0xff775759 width=9.0 2>/dev/null 1>&2 &
 
-default, tree < cmd - 0x35 : skhd --reload
-tree < cmd - 0x35 ; default
+default < cmd - 0x35 : skhd --reload
 
 # Application focus
 lcmd - h : yabai -m window --focus west
@@ -79,46 +75,30 @@ ctrl + shift - 3 : yabai -m window --display 3
 ctrl + shift - 4 : yabai -m window --display 4
 
 # create new space on monitor
-alt - 1 :  osascript ~/.bin/new_space_1.scpt
-alt - 2 :  osascript ~/.bin/new_space_2.scpt
-alt - 3 :  osascript ~/.bin/new_space_3.scpt
-alt - 4 :  osascript ~/.bin/new_space_4.scpt
-
+lalt - 1 :  osascript ~/.bin/new_space_1.scpt
+lalt - 2 :  osascript ~/.bin/new_space_2.scpt
+lalt - 3 :  osascript ~/.bin/new_space_3.scpt
+lalt - 4 :  osascript ~/.bin/new_space_4.scpt
 
 
 # cycle - IGNORE floating windows
-alt - b : yabai -m query --windows --space \
+lalt - b : yabai -m query --windows --space \
     | jq -sr 'add | map(select(.["is-floating"] == false)) | sort_by(.frame.y, .frame.x, .id) | reverse' \
     | python3 -c "import sys, json; j = json.loads(sys.stdin.read()); i = next(filter(lambda e: e[1]['has-focus'], enumerate(j)), (0, {}))[0]; print(j[i-1]['id'])" \
     | xargs -I{} yabai -m window --focus {}
 
 # cycle WITHOUT ignoring floating windows
-alt - m : yabai -m query --windows --space \
+lalt - m : yabai -m query --windows --space \
   | jq -sre 'add |  sort_by(.display, .frame.y, .frame.x, .id) | reverse | nth(index(map(select(.["has-focus"] == true))) - 1).id' \
   | xargs -I{} yabai -m window --focus {}
 
 
-####
-## Tree
-####
-
 # toggle float
 alt - t         : yabai -m window --toggle float
-
-# center a floating window
-alt - c         : ~/.bin/yabai-center
 
 # toggle window split type (like a container rotation)
 alt - e         : yabai -m window --toggle split
 
 # toggle window fullscreen
 cmd - g        : yabai -m window --toggle zoom-fullscreen
-
-# toggle window parent zoom
-tree < p        : yabai -m window --toggle zoom-parent
-
-
-tree < m : ~/.bin/yabai-monocle curr; skhd --key "ctrl - f"
-tree < b : yabai -m space --layout bsp; ~/.bin/yabai-monocle --rm curr; skhd --key "ctrl - f"
-
 

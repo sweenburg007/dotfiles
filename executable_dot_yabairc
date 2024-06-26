@@ -41,11 +41,11 @@ yabai -m config mouse_drop_action            swap
 
 # general space settings
 yabai -m config layout                       bsp
-yabai -m config top_padding                  0
-yabai -m config bottom_padding               0
-yabai -m config left_padding                 0
-yabai -m config right_padding                0
-yabai -m config window_gap                   00
+yabai -m config top_padding                  1
+yabai -m config bottom_padding               1
+yabai -m config left_padding                 1
+yabai -m config right_padding                1
+yabai -m config window_gap                   01
 
 # float system apps
 yabai -m rule --add app="^System Settings$" manage=off
@@ -63,4 +63,4 @@ yabai -m rule --add app="^zoom.us$" manager=off
 echo "yabai configuration loaded.."
 
 # Use boarders for active window stuff
-borders active_color=0xFF88C0D0 inactive_color=0xff775759 width=5.0 2>/dev/null 1>&2 &
+borders active_color=0xFFFF00FF inactive_color=0xff775759 width=9.0 2>/dev/null 1>&2 &

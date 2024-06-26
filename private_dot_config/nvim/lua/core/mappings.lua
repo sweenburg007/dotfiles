@@ -21,7 +21,8 @@ keymap("v", "<leader>p", '"+p')
 keymap("v", "<leader>P", '"+P')
 
 -- clear search highlighting
-keymap("n", "<leader>\\", "<cmd>noh<cr>")
+keymap("n", "<ESC>", "<cmd>noh<cr>")
+keymap("n", "<leader><ESC>", "<cmd>noh<cr>")
 
 -- center search results
 -- */# searches are centered below, in hlslens keybinds
@@ -30,20 +31,10 @@ keymap("n", "N", "Nzz")
 keymap("n", "<C-d>", "<C-d>zz")
 keymap("n", "<C-u>", "<C-u>zz")
 
--- camelcasemotion
-keymap("", "\\w", "<Plug>CamelCaseMotion_w")
-keymap("", "\\b", "<Plug>CamelCaseMotion_b")
-keymap("", "\\e", "<Plug>CamelCaseMotion_e")
-keymap("", "\\ge", "<Plug>CamelCaseMotion_ge")
-
-vim.keymap.set({ "o", "x" }, "\\iw", "<Plug>CamelCaseMotion_iw")
-vim.keymap.set({ "o", "x" }, "\\ib", "<Plug>CamelCaseMotion_ib")
-vim.keymap.set({ "o", "x" }, "\\ie", "<Plug>CamelCaseMotion_ie")
-
 -- Gate mappings that are useless in vscode
 -- portal keymaps
-vim.keymap.set("n", "<leader>o", "<cmd>Portal jumplist backward<cr>")
-vim.keymap.set("n", "<leader>i", "<cmd>Portal jumplist forward<cr>")
+vim.keymap.set("n", "<leader>o", "<cmd>Portal jumplist backward<cr>", { desc = 'Portal jumplist backwards' })
+vim.keymap.set("n", "<leader>i", "<cmd>Portal jumplist forward<cr>", { desc = 'Portal jumplist forwards' })
 vim.keymap.set(
     "n",
     "<Space>o",

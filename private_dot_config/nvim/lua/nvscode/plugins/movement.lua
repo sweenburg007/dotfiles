@@ -1,7 +1,4 @@
 return {
-    -- CamelCase and snake case movements
-    "bkad/CamelCaseMotion",
-
     -- Best movement plugin for going through visual space
     {
         "ggandor/leap.nvim",

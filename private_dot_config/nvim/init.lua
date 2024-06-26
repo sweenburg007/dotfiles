@@ -24,7 +24,7 @@ if vim.fn.exists("g:vscode") ~= 1 then
     require "core.autocmds"
     require "core.mappings"
 else
-    require("lazy").setup("vscode.plugins")
-    require "vscode.core.options"
-    require "vscode.core.mappings"
+    require("lazy").setup("nvscode.plugins")
+    require "nvscode.core.options"
+    require "nvscode.core.mappings"
 end

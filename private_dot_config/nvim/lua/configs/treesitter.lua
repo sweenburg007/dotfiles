@@ -1,6 +1,6 @@
 -- tree-sitter
 require("nvim-treesitter.configs").setup {
-    ensure_installed = { "rust", "python", "c", "verilog", "matlab" },
+    ensure_installed = { "rust", "python", "c", "verilog", "matlab", "cpp", "lua", "bash" },
     ignore_install = { "phpdoc", "php", "t32" },
     sync_install = false,
 

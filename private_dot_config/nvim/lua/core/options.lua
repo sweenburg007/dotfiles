@@ -40,8 +40,22 @@ local options = {
     },
 }
 
+-- Set vim options with a neted table like API with the format vim.<first_key>.<second_key>.<value>
+-- @parma options the nested table of vim options
 for scope, table in pairs(options) do
     for setting, value in pairs(table) do
         vim[scope][setting] = value
     end
+end
+
+-- LSP Diagnostics - better signs
+local signs = {
+    DiagnosticSignError = "x",
+    DiagnosticSignWarn = "!",
+    DiagnosticSignInfo = ">",
+    DiagnosticSignHint = "?",
+}
+
+for name, icon in pairs(signs) do
+    vim.fn.sign_define(name, { text = icon, texthl = name })
 end

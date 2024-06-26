@@ -10,8 +10,8 @@ return {
             "nvim-lua/plenary.nvim",
             {
                 "nvim-telescope/telescope-fzf-native.nvim",
-                build =
-                "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+                build = "make",
+                -- "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
                 config = function()
                     require("telescope").load_extension("fzf")
                 end
@@ -41,6 +41,9 @@ return {
             }
             pcall(require('telescope').load_extension, 'fzf')
             pcall(require('telescope').load_extension, 'ui-select')
+
+            -- show numbers in telescope preview window
+            vim.cmd("autocmd User TelescopePreviewerLoaded setlocal number")
         end,
     },
 
@@ -53,11 +56,12 @@ return {
                 current_line_blame = true,
                 current_line_blame_opts = { delay = 500 },
                 signs = {
-                    add = { text = '+' },
-                    change = { text = '~' },
-                    delete = { text = '_' },
-                    topdelete = { text = '‾' },
+                    add          = { text = '┃' },
+                    change       = { text = '┃' },
+                    delete       = { text = '_' },
+                    topdelete    = { text = '‾' },
                     changedelete = { text = '~' },
+                    untracked    = { text = '┆' },
                 }
             })
         end,

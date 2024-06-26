@@ -38,6 +38,21 @@ vim.api.nvim_create_autocmd('LspAttach', {
         require("lsp-inlayhints").on_attach(client, event.buf)
     end,
 })
+--
+-- assign border -> border_chars
+-- override all floating windows with our new explicitly-defined border
+local border_chars = { "┌", "─", "┐", "│", "┘", "─", "└", "│" }
+local border = {}
+for i, char in pairs(border_chars) do
+    border[i] = { char, "FloatBorder" }
+end
+
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, fp_opts, ...)
+    fp_opts = fp_opts or {}
+    fp_opts.border = fp_opts.border or border
+    return orig_util_open_floating_preview(contents, syntax, fp_opts, ...)
+end
 
 -- Setup lspconfig.
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -78,7 +93,11 @@ lspconfig["pylsp"].setup({
         pylsp = {
             configurationSources = { "ruff", "mypy" },
             plugins = {
-                ruff = { enabled = true },
+                ruff = {
+                    enabled = true,
+                    formatEnabled = true,
+                    format = { "I" }
+                },
                 mypy = { enabled = true },
             },
         },
@@ -93,7 +112,8 @@ vim.list_extend(ensure_installed, {
     'rust_analyzer',
     'clangd',
     'lua-language-server',
-    'bash-language-server'
+    'bash-language-server',
+    'python-lsp-server'
 })
 
 require('mason-tool-installer').setup { ensure_installed = ensure_installed }
