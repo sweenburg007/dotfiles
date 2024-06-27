@@ -1,0 +1,103 @@
+{
+    "editor.rulers": [
+        100
+    ],
+    "editor.minimap.enabled": false,
+    "editor.formatOnSave": true,
+    "editor.stickyScroll.enabled": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports.ruff": "explicit",
+            "source.fixAll": "never"
+        },
+        "editor.formatOnType": true,
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "jupyter.askForKernelRestart": false,
+    "debug.allowBreakpointsEverywhere": true,
+    "zenMode.hideLineNumbers": false,
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#8FBCBB",
+        "statusBar.noFolderBackground": "#8FBCBB",
+        "statusBar.debuggingBackground": "#8FBCBB",
+        "statusBar.foreground": "#434C5E",
+        "statusBar.debuggingForeground": "#434C5E"
+    },
+    "search.exclude": {
+        "**/.venv": true
+    },
+    "workbench.startupEditor": "none",
+    "systemverilogFormatter.commandLineArguments": "--column_limit 150 --indentation_spaces 4",
+    "verilog.linting.path": "/opt/eda/modeltech/linux_x86_64/vsim",
+    "vscode-neovim.neovimExecutablePaths.darwin": "/opt/homebrew/bin/nvim",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "terminal.integrated.scrollback": 10000,
+    "verilog.ctags.path": "/usr/local/bin/ctags",
+    "verilog.linting.modelsim.runAtFileLocation": true,
+    "autoDocstring.docstringFormat": "numpy",
+    "autoDocstring.generateDocstringOnEnter": false,
+    "files.insertFinalNewline": true,
+    "git.autofetch": true,
+    "[systemverilog]": {
+        "editor.defaultFormatter": "bmpenuelas.systemverilog-formatter-vscode"
+    },
+    "systemverilogFormatter.veribleBuild": "Ubuntu-20.04-focal-x86_64",
+    "notebook.formatOnSave.enabled": true,
+    "notebook.output.scrolling": true,
+    "ruff.lint.args": [
+        "--line-length=100",
+        "--select=ALL",
+        "--ignore=T201,ERA001,D100,COM812,S101,ANN101,FBT001,FBT002,FA102,N806,PLR0913,TD003,FIX002"
+    ],
+    "ruff.fixAll": false,
+    "[matlab]": {
+        "editor.defaultFormatter": "AffenWiesel.matlab-formatter"
+    },
+    "MATLAB.installPath": "/Applications/MATLAB_R2023b.app",
+    "files.trimTrailingWhitespace": true,
+    "ruff.codeAction.fixViolation": {
+        "enable": false
+    },
+    "terminal.integrated.fontFamily": "Monaco, 'FantasqueSansM Nerd Font'",
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "notebook.formatOnCellExecution": true,
+    "editor.lineNumbers": "relative",
+    "workbench.preferredDarkColorTheme": "Catppuccin Mocha",
+    "MATLAB.telemetry": false,
+    "notebook.lineNumbers": "on",
+    "workbench.editor.showTabs": "none",
+    "window.zoomLevel": 1,
+    "editor.accessibilitySupport": "off",
+    "terminal.integrated.commandsToSkipShell": [
+        "matlab.interrupt"
+    ],
+    "mypy-type-checker.args": [
+        "--ignore-missing-imports"
+    ],
+    "python.analysis.enablePytestSupport": false,
+    "ruff.format.args": [
+        "--line-length=100"
+    ],
+    "notebook.codeActionsOnSave": {
+        "source.organizeImports.ruff": "explicit",
+        "source.fixAll": "never"
+    },
+    "cmake.configureOnOpen": true,
+    "debug.console.wordWrap": false,
+    "[verilog]": {
+        "editor.defaultFormatter": "bmpenuelas.systemverilog-formatter-vscode"
+    },
+    "[tcl]": {
+        "editor.formatOnSave": false
+    },
+    "cSpell.enabled": false,
+    "cSpell.enableFiletypes": [
+        "markdown"
+    ]
+}
