@@ -37,14 +37,12 @@ require("nvim-treesitter.configs").setup {
                 ["iF"] = "@function.inner",
                 ["ac"] = "@class.outer",
                 ["ic"] = "@class.inner",
-                ["ip"] = "@parameter.inner",
-                ["ap"] = "@parameter.outer",
 
                 ["iv"] = "@assignment.rhs",
                 ["ik"] = "@assignment.lhs",
                 ["in"] = "@number.inner",
 
-                -- system verilog specific text objects (NOTE: will need updated ts parser)
+                -- system verilog specific text objects
                 ["am"] = "@mod-head.outer",
                 ["aP"] = "@parameter-port-list.outer",
                 ["al"] = "@list-of-port-declarations.outer",

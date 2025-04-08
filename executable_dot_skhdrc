@@ -9,6 +9,17 @@ default < cmd + ctrl - 0x35: pkill borders && borders active_color=0xFFFF00FF in
 
 default < cmd - 0x35 : skhd --reload
 
+# Toggle layouts for current space
+ctrl - s : yabai -m space --layout stack
+ctrl - b : yabai -m space --layout bsp
+
+# Stack navigation
+cmd - u : yabai -m window --focus stack.next
+cmd - i : yabai -m window --focus stack.prev
+cmd - f : yabai -m window --focus stack.first
+cmd - e : yabai -m window --focus stack.last
+cmd - a : yabai -m window --focus stack.recent
+
 # Application focus
 lcmd - h : yabai -m window --focus west
 lcmd - j : yabai -m window --focus south

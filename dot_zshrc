@@ -132,7 +132,7 @@ fi
 export PATH="/Users/sweensw1/.local/bin:/Users/sweensw1/.spicetify:$PATH"
 
 # bindkeys for autosuggestions
-bindkey '^[[Z' forward-word
+# bindkey '^[[Z' forward-word
 export LC_ALL=en_US.UTF-8
 
 # if work script exists, source it

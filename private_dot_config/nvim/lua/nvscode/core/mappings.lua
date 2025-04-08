@@ -32,11 +32,13 @@ keymap('n', '<Leader>sg', notify 'workbench.action.findInFiles', { silent = true
 keymap('n', '<Leader>ts', notify 'workbench.action.toggleSidebarVisibility', { silent = true })
 keymap('n', '<Leader>tp', notify 'workbench.action.togglePanel', { silent = true })
 keymap('n', '<Leader>sf', notify 'workbench.action.quickOpen', { silent = true })               -- find files
-keymap('n', '<Leader>sg', notify 'workbench.action.quickTextSearch', { silent = true })               -- find files
-keymap('n', '<Leader>fs', notify 'workbench.action.showAllSymbols', {silent = true})
+keymap('n', '<Leader>sg', notify 'workbench.action.quickTextSearch', { silent = true })         -- find files
+keymap('n', '<Leader>fs', notify 'workbench.action.showAllSymbols', { silent = true })
 keymap('n', '<Leader>tw', notify 'workbench.action.terminal.toggleTerminal', { silent = true }) -- terminal window
 keymap('n', 'gr', notify 'editor.action.goToReferences', { silent = true })
 keymap('n', 'gD', notify 'editor.action.peekDefinition', { silent = true })
+keymap('n', "<Leader>ds", notify 'workbench.action.gotoSymbol', { silent = true })
 keymap('n', '<space>D', notify 'editor.action.goToTypeDefinition', { silent = true })
 keymap('n', '<space>f', notify 'editor.action.formatDocument', { silent = true })
-
+keymap('n', '<Leader>b', notify 'editor.debug.action.toggleBreakpoint', { silent = true })
+keymap('n', '<Leader>d', notify 'workbench.action.debug.start', { silent = true })

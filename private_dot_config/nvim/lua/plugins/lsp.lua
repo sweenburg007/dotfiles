@@ -9,7 +9,7 @@ return {
                 'williamboman/mason-lspconfig.nvim',
                 'WhoIsSethDaniel/mason-tool-installer.nvim',
                 {
-                    "folke/neodev.nvim",
+                    "folke/lazydev.nvim",
                     opts = {
                         override = function(root_dir, library)
                             local util = require("neodev.util")
@@ -48,8 +48,14 @@ return {
             },
         },
         config = function()
-            require("configs.lspconfig")
+            require("configs.lsp.view")
+            require("configs.lsp.servers").setup()
         end
+    },
+
+    -- Add to your config.lua
+    {
+        "nvimtools/none-ls.nvim",
     },
 
     -- use vscode snips from friendly-snippets

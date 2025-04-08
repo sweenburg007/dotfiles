@@ -34,8 +34,8 @@ require("nvim-treesitter.configs").setup {
                 ["iF"] = "@function.inner",
                 ["ac"] = "@class.outer",
                 ["ic"] = "@class.inner",
-                ["ip"] = "@parameter.inner",
-                ["ap"] = "@parameter.outer",
+                -- ["ip"] = "@parameter.inner",
+                -- ["ap"] = "@parameter.outer",
 
                 ["iv"] = "@assignment.rhs",
                 ["ik"] = "@assignment.lhs",

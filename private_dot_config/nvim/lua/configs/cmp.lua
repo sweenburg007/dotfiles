@@ -149,6 +149,22 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.diagnostic.config({
     virtual_text = false,
     severity_sort = true,
+    float = {
+        source = true, -- Show diagnostic source
+        format = function(diagnostic)
+            local source = diagnostic.source
+            local msg = diagnostic.message
+
+            -- Format based on severity
+            if diagnostic.severity == vim.diagnostic.severity.ERROR then
+                return string.format("[%s] Error: %s", source, msg)
+            elseif diagnostic.severity == vim.diagnostic.severity.WARNING then
+                return string.format("[%s] Warning: %s", source, msg)
+            else
+                return string.format("[%s] %s", source, msg)
+            end
+        end
+    },
 })
 
 cmp.event:on(

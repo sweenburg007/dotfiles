@@ -8,6 +8,15 @@ return {
             require("leap").add_repeat_mappings(";", "\\", {
                 relative_directions = false,
             })
+
+            vim.keymap.set({'n', 'x', 'o'}, 'ga',  function ()
+              require('leap.treesitter').select()
+            end)
+
+            -- Linewise.
+            vim.keymap.set({'n', 'x', 'o'}, 'gA',
+              'V<cmd>lua require("leap.treesitter").select()<cr>'
+            )
         end,
     },
 

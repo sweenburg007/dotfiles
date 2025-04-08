@@ -51,8 +51,14 @@ return {
         -- dependencies = "nvim-treesitter/nvim-treesitter",
         config = function()
             require("neogen").setup({
-                -- can't quite get the snippets to expand properly right now...
-                -- snippet_engine = "luasnip",
+                snippet_engine = "luasnip",
+                languages = {
+                    python = {
+                        template = {
+                            annotation_convention = "numpydoc"
+                        }
+                    }
+                }
             })
         end,
     },
