@@ -14,11 +14,8 @@ ctrl - s : yabai -m space --layout stack
 ctrl - b : yabai -m space --layout bsp
 
 # Stack navigation
-cmd - u : yabai -m window --focus stack.next
-cmd - i : yabai -m window --focus stack.prev
-cmd - f : yabai -m window --focus stack.first
-cmd - e : yabai -m window --focus stack.last
-cmd - a : yabai -m window --focus stack.recent
+cmd - u : yabai -m window --focus stack.next || yabai -m window --focus stack.first
+cmd - i : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 
 # Application focus
 lcmd - h : yabai -m window --focus west
@@ -99,7 +96,7 @@ lalt - b : yabai -m query --windows --space \
     | xargs -I{} yabai -m window --focus {}
 
 # cycle WITHOUT ignoring floating windows
-lalt - m : yabai -m query --windows --space \
+lcmd - u : yabai -m query --windows --space \
   | jq -sre 'add |  sort_by(.display, .frame.y, .frame.x, .id) | reverse | nth(index(map(select(.["has-focus"] == true))) - 1).id' \
   | xargs -I{} yabai -m window --focus {}
 
