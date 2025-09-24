@@ -54,4 +54,4 @@ yabai -m rule --add app="^DisplayLink Manager$" manage=off
 echo "yabai configuration loaded.."
 
 # Use boarders for active window stuff
-borders active_color=0xFFFF00FF inactive_color=0xff775759 width=9.0 2>/dev/null 1>&2 &
+borders active_color=0xFF99FFFF inactive_color=0xff775759 width=9.0 2>/dev/null 1>&2 &

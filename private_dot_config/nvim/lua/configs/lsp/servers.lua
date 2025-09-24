@@ -73,14 +73,14 @@ function M.setup()
         capabilities = capabilities
     })
 
-    local null_ls = require("null-ls")
-
-    null_ls.setup({
-        sources = {
-            null_ls.builtins.diagnostics.mypy
-        },
-        debug = true,
-    })
+    -- Really annoyed by mypy rn, going to try doing things without it for a while
+    -- local null_ls = require("null-ls")
+    -- null_ls.setup({
+    --     sources = {
+    --         null_ls.builtins.diagnostics.mypy
+    --     },
+    --     debug = true,
+    -- })
 
     require("mason").setup()
 

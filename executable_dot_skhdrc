@@ -1,6 +1,5 @@
 :: default
 
-
 cmd - 0 : skhd --text "stephen.sweeney@jhuapl.edu"
 cmd - 9 : skhd --text "V6RXXM7NKG-ML"
 

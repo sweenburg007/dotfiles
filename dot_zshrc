@@ -142,3 +142,8 @@ fi
 export PATH=$PATH:/Users/sweensw1/.spicetify
 
 alias drawio='/Applications/draw.io.app/Contents/MacOS/draw.io'
+
+PATH="$PATH":"$HOME/.local/scripts/"
+bindkey -s ^f "tmux-sessionizer\n"
+
+export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources
