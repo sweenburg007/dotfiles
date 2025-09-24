@@ -1,0 +1,179 @@
+#! /usr/bin/env sh
+
+# ,t | tmux-find-cwd
+# Quickly switch to a tmux pane from anywhere (outside or inside tmux).
+# (named ",t" for super-quick usage from shell)
+# from inside tmux:
+#   opens a tmux display-popup, where the default choices are any pane in the same session
+# from outside:
+#   opens an FZF selection, where the default choices are any pane in any non-attached session
+#
+# https://superuser.com/questions/1150431/how-to-select-window-by-working-directory-in-tmux
+
+# SCRIPT=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+# SCRIPT="${BASH_SOURCE[0]}"
+# is just "$0" robust? 'sh' won't have BASH_SOURCE defined.
+SCRIPT="$0"
+
+PREVIEW_CMD="tmux capture-pane -ep -t '{3}'"
+# header="tmux list-panes -s -F '#{pane_current_command}' -t {3}"
+
+# TODO: kind of want to make prompt?/header change on smaller screen sizes?
+# for now, hide the preview if we have size <10.
+FZF_DEFAULT_OPTS="
+    -m
+    --cycle
+    --reverse
+    --preview '$PREVIEW_CMD'
+    --preview-window 'down,border-top,<10(hidden)'
+    --height ${FZF_TMUX_HEIGHT:-98%}
+    $FZF_DEFAULT_OPTS
+    $FZF_CTRL_T_OPTS
+"
+
+__panes_current_session () {
+    # -s: restrict to current session
+    session="$(tmux display-message -p "#S")"
+    tmux list-panes -s \
+        -F "${session} #{window_id} #{pane_id} #{pane_current_command} #{pane_current_path}"
+}
+
+__panes_detached_sessions () {
+    # -a: all panes
+    # -f filter: if session_attached then 0 (false) else true (only detached panes)
+    tmux list-panes -a \
+        -f '#{?session_attached,0,1}' \
+        -F '#{session_name} #{window_id} #{pane_id} #{pane_current_command} #{pane_current_path}' |
+        sed -e "s@$HOME@\$HOME@"
+}
+
+__panes_all_sessions () {
+    tmux list-panes -a \
+        -F '#{session_name} #{window_id} #{pane_id} #{pane_current_command} #{pane_current_path}' |
+        sed -e "s@$HOME@\$HOME@"
+}
+
+__sessions_detached () {
+    tmux list-sessions -f '#{session_attached}' -F '#{session_name}'
+}
+
+__sessions_all () {
+    # not really sure why not to use this...?
+    tmux list-sessions -F '#{session_name}'
+}
+
+__detach_session () {
+    # detaches a given session, if it's attached.
+    session_name="$1"
+    [ -z "$session_name" ] && exit 1
+
+    # don't detach if we're in that session already
+    if [ -n "$TMUX" ] && [ "$(tmux display-message -p "#S")" = "$session_name" ]; then
+        return 1
+    fi
+
+    current_attached="$(tmux list-sessions -f '#{session_attached}' -F '#{session_name}')"
+    if [ "$(echo "$current_attached" | grep -c "^${session_name}$")" -eq 1 ]; then
+        tmux detach-client -s "$session_name"
+    fi
+}
+
+fuzzy_jump_to_session () {
+    transformer="
+        case \$FZF_PROMPT in
+            'Detached Sessions> ')
+                echo 'change-prompt(All Sessions> )+reload($SCRIPT __panes_all_sessions)'
+                ;;
+            'All Sessions> ')
+                echo 'change-prompt(Detached Sessions> )+reload($SCRIPT __panes_detached_sessions)'
+                ;;
+        esac
+    "
+    
+    # from outside tmux, jump to a specific pane.
+    __panes_detached_sessions |
+        fzf \
+            --prompt 'Detached Sessions> ' \
+            --header 'CTRL-T: Detached/All Panes' \
+            --bind "ctrl-t:transform:$transformer" \
+            --nth 1,4,5 |
+        while read -r item; do
+            echo "$item" | awk '{print $1 " " $2 " " $3}'
+        done
+}
+
+fuzzy_jump_to_pane () {
+    # from inside tmux, jump to a specific pane.
+
+    transformer="
+        case \$FZF_PROMPT in
+            'Current Session> ')
+                echo 'change-prompt(Detached Sessions> )+reload($SCRIPT __panes_detached_sessions)'
+                ;;
+            'Detached Sessions> ')
+                echo 'change-prompt(All Sessions> )+reload($SCRIPT __panes_all_sessions)'
+                ;;
+            'All Sessions> ')
+                echo 'change-prompt(Current Session> )+reload($SCRIPT __panes_current_session)'
+                ;;
+            esac
+    "
+
+    __panes_current_session | \
+        fzf \
+            --header "CTRL-T: Current/Detached/All Panes" \
+            --prompt 'Current Session> ' \
+            --bind "ctrl-t:transform:$transformer" \
+            --with-nth 1,3,4,5 |
+        while read -r session_name window pane _cmd _pth; do
+            tmux select-window -t "$window" && \
+                tmux select-pane -t "$pane"
+
+            # detach target session if necessary, then switch to it.
+            __detach_session "$session_name"
+            tmux switch-client -t "$session_name"
+
+            return
+        done
+}
+
+fuzzy_select_from_anywhere () {
+    if [ -n "$TMUX" ]; then
+        # when running from inside tmux, give us a pop-up window:
+        command tmux display-popup -E -w '95%' -h '95%' "$SCRIPT fuzzy_jump_to_pane"
+    else
+        # # this approach doesn't work, cause it's in a subshell (thinks i'm not in a terminal).
+        # fuzzy_jump_to_session |
+        #     while read -r session window pane; do
+        #         tmux select-window -t "$window" && \
+        #             tmux select-pane -t "$pane" && \
+        #             tmux attach-session -t "$session"
+        #     done
+
+        output="$(fuzzy_jump_to_session)"
+        session=$(echo "$output" | awk '{print $1}')
+        window=$(echo "$output" | awk '{print $2}')
+        pane=$(echo "$output" | awk '{print $3}')
+
+        [ -z "$session" ] && exit 0
+
+        __detach_session "$session"
+
+        # funny ordering to ensure the right window+pane are active before we attach.
+        tmux select-window -t "$window" && \
+            tmux select-pane -t "$pane" && \
+            tmux attach-session -t "$session"
+    fi
+}
+
+if [ $# -eq 0 ]; then
+    fuzzy_select_from_anywhere
+else
+    if [ "$1" = "a" ]; then
+        tmux attach
+        exit 0
+    fi
+    # ensure we have some valid function, then run it
+    # (how to check if it's a function in this file?)
+    hash "$1" && "$1"
+fi
