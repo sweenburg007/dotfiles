@@ -9,6 +9,7 @@
 (defcfg
   process-unmapped-keys yes
   concurrent-tap-hold yes
+  danger-enable-cmd yes
 )
 (defsrc
   caps  a   s   d   f   g   h   j   k   l   ;
@@ -74,8 +75,8 @@
 ;; Define chords for layer switching
 (defchordsv2
     ;; Chord for layer 1: press d and k together
-    (d k) (layer-switch base) 100 first-release (nomods)
-    (q p) (layer-switch numeric) 100 first-release (nomods)
-    (a ;) (layer-switch arrows) 100 first-release(nomods)
-    (z /) (layer-switch media) 100 first-release (nomods)
+    (d k) (multi (layer-switch base) (cmd sudo -u sweensw1 /opt/homebrew/bin/sketchybar --set kanata_layer label=Base)) 100 first-release (nomods)
+    (q p) (multi (layer-switch numeric) (cmd sudo -u sweensw1 /opt/homebrew/bin/sketchybar --set kanata_layer label=Numeric)) 100 first-release (nomods)
+    (a ;) (multi (layer-switch arrows) (cmd sudo -u sweensw1 /opt/homebrew/bin/sketchybar --set kanata_layer label=Arrows)) 100 first-release(nomods)
+    (z /) (multi (layer-switch media) (cmd sudo -u sweensw1 /opt/homebrew/bin/sketchybar --set kanata_layer label=Media)) 100 first-release (nomods)
 )
