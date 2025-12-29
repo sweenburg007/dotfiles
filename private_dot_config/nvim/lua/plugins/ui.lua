@@ -20,9 +20,8 @@ return {
     -- re-color window split borders
     {
         "nvim-zh/colorful-winsep.nvim",
-        opts = {
-            highlight = { ctermfg = 2 },
-        },
+        config = true,
+        event = { "WinLeave" },
     },
 
     -- updated vim ui, needed to make noice less annoyning

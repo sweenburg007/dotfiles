@@ -6,21 +6,29 @@ return {
     -- Best movement plugin for going through visual space
     {
         "ggandor/leap.nvim",
+        dependencies = { "tpope/vim-repeat" },
         config = function()
-            require("leap").add_default_mappings()
+            vim.keymap.set({ 'n', 'x', 'o' }, 's', '<Plug>(leap)')
+            vim.keymap.set('n', 'S', '<Plug>(leap-from-window)')
 
-            require("leap").add_repeat_mappings(";", "\\", {
-                relative_directions = false,
-            })
-
-            vim.keymap.set({'n', 'x', 'o'}, 'ga',  function ()
-              require('leap.treesitter').select()
+            vim.keymap.set({ 'n', 'o' }, 'gs', function()
+                require('leap.remote').action {
+                    -- Automatically enter Visual mode when coming from Normal.
+                    input = vim.fn.mode(true):match('o') and '' or 'v'
+                }
             end)
 
-            -- Linewise.
-            vim.keymap.set({'n', 'x', 'o'}, 'gA',
-              'V<cmd>lua require("leap.treesitter").select()<cr>'
-            )
+            -- Forced linewise version (`gS{leap}jjy`):
+            vim.keymap.set({ 'n', 'o' }, 'gS', function()
+                require('leap.remote').action { input = 'V' }
+            end)
+
+            -- treesitter leaping
+            vim.keymap.set({ 'x', 'o' }, 'R', function()
+                require('leap.treesitter').select {
+                    opts = require('leap.user').with_traversal_keys('R', 'r')
+                }
+            end)
         end,
     },
 
@@ -38,17 +46,6 @@ return {
                 }
             },
         },
-    },
-
-    {
-        'rasulomaroff/telepath.nvim',
-        dependencies = 'ggandor/leap.nvim',
-        -- there's no sence in using lazy loading since telepath won't load the main module
-        -- until you actually use mappings
-        lazy = false,
-        config = function()
-            require('telepath').use_default_mappings()
-        end
     },
 
     -- cool searching

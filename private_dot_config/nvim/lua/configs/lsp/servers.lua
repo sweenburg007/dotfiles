@@ -17,28 +17,30 @@ function M.setup()
     }
 
     for _, lsp in pairs(servers) do
-        lspconfig[lsp].setup {
+        vim.lsp.config("lsp", {
             on_attach = on_attach,
             capabilities = capabilities,
             flags = {
                 debounce_text_changes = 150,
             },
-        }
+        })
+        vim.lsp.enable(lsp)
     end
 
-    lspconfig.matlab_ls.setup({
+    vim.lsp.config("matlab_ls", {
         capabilities = require("cmp_nvim_lsp").default_capabilities(),
         settings = {
             matlab = {
                 indexWorkspace = true,
-                installPath = "/Applications/MATLAB_R2023b.app/",
+                installPath = "/Applications/MATLAB_R2025b.app/",
                 matlabConnectionTiming = "onStart",
                 telemetry = false,
             }
         }
     })
+    vim.lsp.enable("matlab_ls")
 
-    lspconfig.pyright.setup {
+    vim.lsp.config("pyright", {
         settings = {
             pyright = {
                 disableOrganizeImports = true,
@@ -52,35 +54,32 @@ function M.setup()
                 }
             }
         }
-    }
+    })
+    vim.lsp.enable("pyright")
 
-    require('lspconfig').ruff.setup {
+    vim.lsp.config("ruff", {
         on_attach = on_attach,
         init_options = {
             settings = {}
         }
-    }
+    })
+    vim.lsp.enable("ruff")
 
-    require('lspconfig').verible.setup({
+
+    vim.lsp.config("verible", {
         on_attach = on_attach,
         cmd = {
             'verible-verilog-ls',
             '--indentation_spaces', '4'
         }
     })
-    require('lspconfig').vhdl_ls.setup({
+    vim.lsp.enable("verible")
+
+    vim.lsp.config("vhdl_ls", {
         on_attach = on_attach,
         capabilities = capabilities
     })
-
-    -- Really annoyed by mypy rn, going to try doing things without it for a while
-    -- local null_ls = require("null-ls")
-    -- null_ls.setup({
-    --     sources = {
-    --         null_ls.builtins.diagnostics.mypy
-    --     },
-    --     debug = true,
-    -- })
+    vim.lsp.enable("vhdl_ls")
 
     require("mason").setup()
 
