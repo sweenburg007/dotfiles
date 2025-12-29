@@ -44,14 +44,14 @@ sketchybar --add item aerospace_cur_workspace left \
     label="1" \
     icon="󱂬" \
     update_freq=0 \
-    script="$HOME/.config/sketchybar/plugins/aerospace.sh"
+    script="$PLUGIN_DIR/aerospace.sh"
 
 sketchybar --add item kanata_layer left \
   --set kanata_layer \
   label="Base" \
   icon="󰌌" \
   update_freq=0 \
-  script="$HOME/.config/sketchybar/plugins/kanata_layer.sh"
+  script="$PLUGIN_DIR/kanata_layer.sh"
 
 sketchybar --add item chevron left \
            --set chevron icon= label.drawing=off \
@@ -87,13 +87,13 @@ sketchybar --add item clock right \
            --subscribe battery system_woke power_source_change
 
 sketchybar -m --add item ram right \
-           --set ram script="$HOME/.config/sketchybar/plugins/ram.sh" \
+           --set ram script="$PLUGIN_DIR/ram.sh" \
                      update_freq=5 \
                      icon="" \
                      label="--%" \
 
 sketchybar -m --add item cpu right \
-           --set cpu script="$HOME/.config/sketchybar/plugins/cpu.sh" \
+           --set cpu script="$PLUGIN_DIR/cpu.sh" \
                    update_freq=3 \
                    icon="" \
                    label="--%" \
