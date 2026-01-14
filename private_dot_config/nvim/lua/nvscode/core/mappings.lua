@@ -40,5 +40,18 @@ keymap('n', 'gD', notify 'editor.action.peekDefinition', { silent = true })
 keymap('n', "<Leader>ds", notify 'workbench.action.gotoSymbol', { silent = true })
 keymap('n', '<space>D', notify 'editor.action.goToTypeDefinition', { silent = true })
 keymap('n', '<space>f', notify 'editor.action.formatDocument', { silent = true })
+
+-- Debugging stuff
 keymap('n', '<Leader>b', notify 'editor.debug.action.toggleBreakpoint', { silent = true })
+keymap('n', '<Leader>dB', notify 'workbench.debug.viewlet.action.removeAllBreakpoints', { silent = true })
+
 keymap('n', '<Leader>d', notify 'workbench.action.debug.start', { silent = true })
+keymap('n', '<Leader>dq', notify 'workbench.action.debug.stop', { silent = true })
+keymap('n', '<Leader>dc', notify 'workbench.action.debug.continue', { silent = true })
+keymap('n', '<Leader>dr', notify 'workbench.action.debug.restart', { silent = true })
+
+keymap('n', '<Leader>do', notify 'workbench.action.debug.stepOver', { silent = true })
+keymap('n', '<Leader>di', notify 'workbench.action.debug.stepInto', { silent = true })
+keymap('n', '<Leader>dO', notify 'workbench.action.debug.stepOut', { silent = true })
+
+keymap('n', '<Leader>dp', notify 'workbench.action.debug.pause', { silent = true })
