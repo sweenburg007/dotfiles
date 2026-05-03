@@ -1,5 +1,5 @@
 -- Text Manipulation
-return {
+local plugins = {
     -- updated vim-surround
     {
         "kylechui/nvim-surround",
@@ -34,32 +34,41 @@ return {
             }
         end,
     },
-
-    -- visualization for undo tree
-    {
-        "mbbill/undotree",
-        config = function()
-            vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "[U]ndotreeToggle" })
-        end,
-    },
-
-    {
-        "danymat/neogen",
-        config = function()
-            require("neogen").setup({
-                snippet_engine = "luasnip",
-                languages = {
-                    python = {
-                        template = {
-                            annotation_convention = "numpydoc"
-                        }
-                    }
-                }
-            })
-            vim.api.nvim_set_keymap(
-                "n", "<Leader>ng", ":lua require('neogen').generate()<CR>",
-                { noremap = true, silent = true, desc = "[N]eogen [G]enerate" }
-            )
-        end,
-    },
 }
+
+
+if vim.fn.exists("g:vscode") ~= 1 then
+    table.insert(plugins,
+        {
+            -- visualization for undo tree
+            {
+                "mbbill/undotree",
+                config = function()
+                    vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "[U]ndotreeToggle" })
+                end,
+            },
+
+            {
+                "danymat/neogen",
+                config = function()
+                    require("neogen").setup({
+                        snippet_engine = "luasnip",
+                        languages = {
+                            python = {
+                                template = {
+                                    annotation_convention = "numpydoc"
+                                }
+                            }
+                        }
+                    })
+                    vim.api.nvim_set_keymap(
+                        "n", "<Leader>ng", ":lua require('neogen').generate()<CR>",
+                        { noremap = true, silent = true, desc = "[N]eogen [G]enerate" }
+                    )
+                end,
+            },
+        }
+    )
+end
+
+return plugins
