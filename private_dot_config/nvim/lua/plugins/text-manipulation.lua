@@ -1,15 +1,8 @@
 -- Text Manipulation
-
 return {
     -- updated vim-surround
     {
         "kylechui/nvim-surround",
-        config = true,
-    },
-
-    -- TS aware commenting
-    {
-        "numToStr/Comment.nvim",
         config = true,
     },
 
@@ -43,12 +36,15 @@ return {
     },
 
     -- visualization for undo tree
-    "mbbill/undotree",
+    {
+        "mbbill/undotree",
+        config = function()
+            vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "[U]ndotreeToggle" })
+        end,
+    },
 
-    -- handy docstring generator
     {
         "danymat/neogen",
-        -- dependencies = "nvim-treesitter/nvim-treesitter",
         config = function()
             require("neogen").setup({
                 snippet_engine = "luasnip",
@@ -60,6 +56,10 @@ return {
                     }
                 }
             })
+            vim.api.nvim_set_keymap(
+                "n", "<Leader>ng", ":lua require('neogen').generate()<CR>",
+                { noremap = true, silent = true, desc = "[N]eogen [G]enerate" }
+            )
         end,
     },
 }

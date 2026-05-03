@@ -36,7 +36,7 @@ local options = {
 
         inccommand = "split",
         scrolloff = 10,
-        hlsearch = true
+        hlsearch = true,
     },
 }
 

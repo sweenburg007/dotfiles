@@ -18,8 +18,8 @@
   ;; Note: consider using different time values for your different fingers.
   ;; For example, your pinkies might be slower to release keys and index
   ;; fingers faster.
-  tap-time 200
-  hold-time 150
+  tap-time 180
+  hold-time 200
 
   left-hand-keys (
     q w e r t
@@ -49,7 +49,7 @@
 )
 
 (deflayer media
-   esc  a   s   d   pp   next   prev   voldwn   volu   mute   ;
+   esc  brup   brdn   d   pp   next   prev   voldwn   volu   mute   ;
 )
 
 (deffakekeys
@@ -57,6 +57,9 @@
 )
 
 (defalias
+  brup (cmd /opt/homebrew/bin/brightness -i 0.1)
+  brdn (cmd /opt/homebrew/bin/brightness -d 0.1)
+
   tap (multi
     (layer-switch nomods)
     (on-idle-fakekey to-base tap 20)

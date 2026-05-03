@@ -121,6 +121,22 @@ ins_left {
 }
 
 ins_left {
+    function()
+        local reg = vim.fn.reg_recording()
+        if reg == '' then return '' end
+        return ' REC @' .. reg
+    end,
+    color = { fg = colors.orange, gui = 'bold' },
+}
+
+ins_left {
+    function()
+        local cwd = vim.fn.getcwd()
+        return ' ' .. vim.fn.fnamemodify(cwd, ':t')
+    end,
+}
+
+ins_left {
     -- filesize component
     'filesize',
     cond = conditions.buffer_not_empty,

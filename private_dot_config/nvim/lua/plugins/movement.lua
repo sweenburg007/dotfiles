@@ -1,11 +1,9 @@
 -- Movement Plugins
-return {
-    -- tmux/vim interop
-    "christoomey/vim-tmux-navigator",
+local plugins = {
 
     -- Best movement plugin for going through visual space
     {
-        "ggandor/leap.nvim",
+        url = "https://codeberg.org/andyg/leap.nvim",
         dependencies = { "tpope/vim-repeat" },
         config = function()
             vim.keymap.set({ 'n', 'x', 'o' }, 's', '<Plug>(leap)')
@@ -29,23 +27,43 @@ return {
                     opts = require('leap.user').with_traversal_keys('R', 'r')
                 }
             end)
-        end,
-    },
 
-    -- multi-line f/t
-    {
-        "ggandor/flit.nvim",
-        opts = {
-            labeled_modes = "n",
-            special_keys = {
-                repeat_search = { "<Enter>" },
-            },
-            opts = {
-                special_keys = {
-                    repeat_search = { "<Enter>" },
-                }
-            },
-        },
+            -- enhanced f/t motions from flit
+            local function ft(key_specific_args)
+                require('leap').leap(
+                    vim.tbl_deep_extend('keep', key_specific_args, {
+                        -- Uncomment to limit search scope to the current line:
+                        -- pattern = function(pat) return '\\%.l' .. pat end,
+                        inputlen = 1,
+                        inclusive = true,
+                        opts = {
+                            -- Force autojump.
+                            labels = '',
+                            -- Match the modes where you don't need labels (`:h mode()`).
+                            safe_labels = vim.fn.mode(1):match('o') and '' or nil,
+                        },
+                    })
+                )
+            end
+
+            -- A helper function making it easier to set "clever-f" behavior
+            -- (use f/F or t/T instead of ;/, - see the plugin clever-f.vim).
+            local clever = require('leap.user').with_traversal_keys
+            local clever_f, clever_t = clever('f', 'F'), clever('t', 'T')
+
+            vim.keymap.set({ 'n', 'x', 'o' }, 'f', function()
+                ft { opts = clever_f }
+            end)
+            vim.keymap.set({ 'n', 'x', 'o' }, 'F', function()
+                ft { backward = true, opts = clever_f }
+            end)
+            vim.keymap.set({ 'n', 'x', 'o' }, 't', function()
+                ft { offset = -1, opts = clever_t }
+            end)
+            vim.keymap.set({ 'n', 'x', 'o' }, 'T', function()
+                ft { backward = true, offset = 1, opts = clever_t }
+            end)
+        end,
     },
 
     -- cool searching
@@ -65,12 +83,12 @@ return {
             virt_priority = 10,
         },
     },
-
-    {
-        "cbochs/portal.nvim",
-        dependencies = {
-            "cbochs/grapple.nvim",
-            "ThePrimeagen/harpoon"
-        },
-    },
 }
+if vim.fn.exists("g:vscode") ~= 1 then
+    table.insert(plugins, {
+        -- tmux/vim interop
+        "christoomey/vim-tmux-navigator",
+    })
+end
+
+return plugins

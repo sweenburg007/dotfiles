@@ -107,7 +107,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-source $HOME/.cargo/env
 export PATH="~/.local/bin:$PATH"
 
 if type brew &>/dev/null; then
@@ -124,13 +123,6 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# pyenv setup
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
-# add poetry to path
-export PATH="/Users/sweensw1/.local/bin:/Users/sweensw1/.spicetify:$PATH"
-
 # bindkeys for autosuggestions
 # bindkey '^[[Z' forward-word
 export LC_ALL=en_US.UTF-8
@@ -139,11 +131,8 @@ export LC_ALL=en_US.UTF-8
 if [  -f ~/.work_configs.sh ]; then
   source ~/.work_configs.sh
 fi
-export PATH=$PATH:/Users/sweensw1/.spicetify
 
 alias drawio='/Applications/draw.io.app/Contents/MacOS/draw.io'
 
 PATH="$PATH":"$HOME/.local/scripts/"
 bindkey -s ^f "tmux-sessionizer\n"
-
-export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources
